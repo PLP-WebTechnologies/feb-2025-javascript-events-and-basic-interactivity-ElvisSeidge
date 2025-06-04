@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Birds of Kenya - Interactive Web</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 30px;
+      background-color: #f0f8ff;
+      transition: background-color 0.3s ease;
+    }
+
+    h1 {
+      color: #2e8b57;
+    }
+
+    button {
+      margin: 10px;
+      padding: 10px 15px;
+      cursor: pointer;
+    }
+
+    .hover-box {
+      padding: 15px;
+      background-color: #fff8dc;
+      border: 1px solid #ccc;
+      margin-bottom: 20px;
+    }
+
+    .hover-box:hover {
+      background-color: #ffe4b5;
+    }
+
+    #gallery {
+      display: flex;
+      gap: 10px;
+    }
+
+    #gallery img {
+      width: 150px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: transform 0.3s;
+    }
+
+    #gallery img:hover {
+      transform: scale(1.1);
+    }
+
+    .tabs {
+      margin: 20px 0;
+    }
+
+    .tab-content {
+      display: none;
+      padding: 10px;
+      border: 1px solid #ccc;
+      margin-top: 5px;
+      background-color: #ffffff;
+    }
+
+    .active-tab {
+      display: block;
+    }
+
+    form {
+      margin-top: 30px;
+      background: #fdfdfd;
+      padding: 15px;
+      border-radius: 8px;
+      max-width: 400px;
+    }
+
+    input {
+      display: block;
+      margin-bottom: 10px;
+      padding: 8px;
+      width: 100%;
+    }
+
+    .error {
+      color: red;
+      font-size: 0.9em;
+    }
+
+    .success {
+      color: green;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Birds of Kenya 🐦</h1>
+
+  <div class="hover-box" id="hoverBox">
+    Hover over this box to see the effect. Birds love trees, and Kenya is home to over 1,000 bird species!
+  </div>
+
+  <button onclick="changeText()">Click to Change Background Color</button>
+  <button ondblclick="secretMessage()">Double-Click for a Surprise</button>
+
+  <h2>Bird Gallery</h2>
+  <div id="gallery">
+    <img src="https://placehold.co/150x100?text=Flamingo" alt="Flamingo" />
+    <img src="https://placehold.co/150x100?text=Eagle" alt="Eagle" />
+    <img src="https://placehold.co/150x100?text=Parrot" alt="Parrot" />
+  </div>
+
+  <div class="tabs">
+    <button onclick="showTab('tab1')">Habitat</button>
+    <button onclick="showTab('tab2')">Diet</button>
+    <button onclick="showTab('tab3')">Migration</button>
+  </div>
+
+  <div id="tab1" class="tab-content">Kenyan birds live in forests, wetlands, savannas, and even urban gardens.</div>
+  <div id="tab2" class="tab-content">Most birds eat seeds, insects, nectar, or fish depending on their type.</div>
+  <div id="tab3" class="tab-content">Some birds migrate seasonally between continents, others stay local all year.</div>
+
+  <h2>Subscribe to Bird Updates</h2>
+  <form id="birdForm" onsubmit="return validateForm()">
+    <input type="text" id="name" placeholder="Your Name" />
+    <div id="nameError" class="error"></div>
+
+    <input type="email" id="email" placeholder="Your Email" />
+    <div id="emailError" class="error"></div>
+
+    <input type="password" id="password" placeholder="Password (min 8 characters)" />
+    <div id="passwordError" class="error"></div>
+
+    <button type="submit">Submit</button>
+    <div id="formSuccess" class="success"></div>
+  </form>
+
+  <script>
+    document.addEventListener("keypress", function(event) {
+      console.log("You pressed:", event.key);
+    });
+
+    function changeText() {
+      document.body.style.backgroundColor = "#e0ffe0";
+    }
+
+    function secretMessage() {
+      alert("You found the secret! 🐦 Keep exploring the skies!");
+    }
+
+    function showTab(tabId) {
+      const tabs = document.querySelectorAll('.tab-content');
+      tabs.forEach(tab => tab.classList.remove('active-tab'));
+      document.getElementById(tabId).classList.add('active-tab');
+    }
+
+    function validateForm() {
+      let isValid = true;
+
+      const name = document.getElementById("name").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value.trim();
+
+      document.getElementById("nameError").textContent = "";
+      document.getElementById("emailError").textContent = "";
+      document.getElementById("passwordError").textContent = "";
+      document.getElementById("formSuccess").textContent = "";
+
+      if (name === "") {
+        document.getElementById("nameError").textContent = "Name is required.";
+        isValid = false;
+      }
+
+      const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+      if (!emailPattern.test(email)) {
+        document.getElementById("emailError").textContent = "Enter a valid email.";
+        isValid = false;
+      }
+
+      if (password.length < 8) {
+        document.getElementById("passwordError").textContent = "Password must be at least 8 characters.";
+        isValid = false;
+      }
+
+      if (isValid) {
+        document.getElementById("formSuccess").textContent = "Form submitted successfully!";
+      }
+
+      return false; // Prevent actual form submission for demo
+    }
+  </script>
+
+</body>
+</html>
